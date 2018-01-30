@@ -1,5 +1,6 @@
 var srcFiles = './app/'
 var distFiles = './dist/'
+var node_modules = './node_modules/'
 
 var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
@@ -12,7 +13,7 @@ gulp.task('sass', function(){
         .pipe(sass().on('error', function(e){
             console.log(e);
         }))
-        .pipe(gulp.dest('./dist/'))
+        .pipe(gulp.dest('./dist/'));
 })
 
 gulp.task('html',function(){
@@ -30,6 +31,11 @@ gulp.task('css', function(){
         .pipe(gulp.dest(distFiles))
 })
 
+gulp.task('cssNode_Modules', function(){
+    return gulp.src(node_modules + '**/*.css')
+        .pipe(gulp.dest(node_modules));
+})
+
 gulp.task('all',function(){
     return gulp.src(srcFiles + '**/!(*.html | *.js | *.css | *.scss)')
 })
@@ -37,7 +43,12 @@ gulp.task('all',function(){
 gulp.task('serve', function(){
     browserSync.init({
         host:'localhost',
-        server:distFiles,
+        server: {
+            baseDir: distFiles,
+            routes:{
+                "/node_modules" : "node_modules"
+            }
+        },
         open:false
     })
 
