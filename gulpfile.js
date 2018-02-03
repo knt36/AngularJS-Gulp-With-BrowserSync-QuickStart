@@ -53,8 +53,10 @@ gulp.task('serve', function(){
     })
 
     sequence(['sass','css','html','javascript'],'all', function(){
-        gulp.watch(srcFiles + '**/*').on('change', function(){
+        gulp.watch(srcFiles + '**/*.*').on('change', function(){
             sequence(['sass','css','html','javascript'],'all', function(){
+                var dateNow = new Date(Date.now());
+                console.log(dateNow.toUTCString() + ":" + dateNow.getSeconds())
                 browserSync.reload();
             })
         })
