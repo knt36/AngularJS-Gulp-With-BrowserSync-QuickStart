@@ -1,6 +1,37 @@
+@mixin random-color(){
+  $colors: blue, pink, yellow, red;
+  $key: random( length($colors) );
+  $nth: nth( $colors, $key );
+  background-color: $nth;
+}
+
+@function random-color-function(){
+  $colors: blue, pink, yellow, red, magenta, silver;
+  @return nth($colors,random(length($colors)));
+}
 @font-face {
   font-family:"icomoon";
   src:url("https://cdn.rawgit.com/angular/material/master/docs/app/fonts/icomoon.eot");
   font-weight:normal;
   font-style:normal;
+}
+
+
+.flex-tile{
+  margin:1em;
+  padding-bottom:100%;
+  background-color:white;
+}
+
+#item1{
+  background-color: random-color-function();
+}
+
+#item2{
+  background-color: random-color-function();
+  overflow-y:scroll;
+}
+
+#item3{
+  height:100%;
 }
